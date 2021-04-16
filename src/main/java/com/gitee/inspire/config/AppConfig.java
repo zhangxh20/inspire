@@ -12,6 +12,7 @@ import java.util.List;
 public class AppConfig {
 
     private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
+
     @Bean
     public DatasourceManager datasourceManager(DatasourceProperties properties) {
         DatasourceManager manager = new DatasourceManager();

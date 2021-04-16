@@ -19,8 +19,12 @@ public class ProcessorFacade {
     @PostConstruct
     private void init() {
         processors.forEach(p -> {
-            processorMap.put(p.getType(), p);
+            processorMap.put(p.getType().getCode(), p);
         });
+    }
+
+    public Processor getProcessor(Integer dataType) {
+        return processorMap.get(dataType);
     }
 
 }
