@@ -7,6 +7,9 @@ spring:
       minimumIdle: 1
       maxPoolSize: 10
       idleTimeout: 60000
+server:
+  servlet:
+    context-path: /inspire
 datasource:
   config:
     connections:

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!-- 控制台输出 -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+        </filter>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>%date{ISO8601} %-5level [%thread] %logger{32}:%L - %message%n</pattern>
+        </layout>
+    </appender>
+    
+    <appender name="rollingFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${LOG_HOME:-${user.dir}}/app.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME:-${user.dir}}/app-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy
+                class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>100MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <maxHistory>3</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%date{ISO8601} %-5level [%thread] %logger{32}:%L - %message%n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="com.gitee.inspire.dao" level="DEBUG"/>
+    <root>
+        <level value="INFO" />
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="rollingFile" />
+    </root>
+
+</configuration>
