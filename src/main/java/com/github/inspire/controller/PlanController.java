@@ -23,8 +23,9 @@ public class PlanController {
         return Result.success(planService.query(req));
     }
 
-    @RequestMapping
+    @RequestMapping("execute")
     public Result<Void> execute(Integer planId) {
+        planService.execute(planId);
         return Result.success(null);
     }
 

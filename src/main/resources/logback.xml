@@ -24,7 +24,7 @@
         </encoder>
     </appender>
 
-    <logger name="com.gitee.inspire.dao" level="DEBUG"/>
+    <logger name="com.github.inspire.dao" level="DEBUG"/>
     <root>
         <level value="INFO" />
         <appender-ref ref="STDOUT"/>

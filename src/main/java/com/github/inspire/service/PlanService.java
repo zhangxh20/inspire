@@ -25,9 +25,9 @@ public class PlanService {
     @Resource
     public DatasetMapper datasetMapper;
     @Resource
-    public RuleMapper ruleMapper;
+    private RuleMapper ruleMapper;
     @Resource
-    public ThreadPoolTaskExecutor executor;
+    private ThreadPoolTaskExecutor executor;
     @Resource
     private ProcessorFacade facade;
 
