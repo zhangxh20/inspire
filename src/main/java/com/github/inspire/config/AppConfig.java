@@ -2,6 +2,7 @@ package com.github.inspire.config;
 
 import com.github.inspire.manager.DatasourceManager;
 import com.zaxxer.hikari.HikariDataSource;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,6 +10,7 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import java.util.List;
 
+@Slf4j
 @Configuration
 public class AppConfig {
 
@@ -30,6 +32,7 @@ public class AppConfig {
             dataSource.setIdleTimeout(60000);
             dataSource.setMaximumPoolSize(10);
             manager.addDataSource(prop.getName(), dataSource);
+            log.info("load datasource:" + prop.getName());
         }
         return manager;
     }

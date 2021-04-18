@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -79,5 +80,26 @@ public class PlanService {
 
     public void stop(Integer planId) {
         facade.stop(planId);
+    }
+
+    public Plan getPlanView(Integer id) {
+        Plan plan = getPlan(id);
+        List<Dataset> datasets = plan.getDatasets();
+        List<Dataset> viewDatasets = new ArrayList<>();
+        plan.setDatasets(viewDatasets);
+        for (Dataset dataset : datasets) {
+            dataset.setLevel(0);
+            viewDatasets.add(dataset);
+            setChildLevel(dataset, viewDatasets);
+        }
+        return plan;
+    }
+
+    private void setChildLevel(Dataset dataset, List<Dataset> list) {
+        for (Dataset ds : dataset.getChildren()) {
+            ds.setLevel(dataset.getLevel() + 1);
+            list.add(ds);
+            setChildLevel(ds, list);
+        }
     }
 }

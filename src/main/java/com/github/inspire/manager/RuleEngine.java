@@ -14,6 +14,7 @@ public class RuleEngine {
     public void execute(Map<String, Object> content, List<Rule> rules, ExecuteContext context) {
         for (Rule rule : rules) {
             Boolean result = execute(rule.getExpression(), content);
+            metrics(result, context, content);
         }
     }
 

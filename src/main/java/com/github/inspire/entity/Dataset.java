@@ -31,6 +31,9 @@ public class Dataset {
     private Date updateTime;
 
     @TableField(exist = false)
+    private Integer level;
+
+    @TableField(exist = false)
     private List<Dataset> children;
 
     @TableField(exist = false)

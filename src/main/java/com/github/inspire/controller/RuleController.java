@@ -22,4 +22,10 @@ public class RuleController {
         ruleService.update(rule);
         return Result.success(null);
     }
+
+    @RequestMapping("delete")
+    public Result<Void> delete(Integer id) {
+        ruleService.delete(id);
+        return Result.success(null);
+    }
 }

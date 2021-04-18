@@ -14,7 +14,6 @@ import javax.annotation.Resource;
 @RequestMapping("plan")
 public class PlanController {
 
-
     @Resource
     public PlanService planService;
 
@@ -24,15 +23,20 @@ public class PlanController {
     }
 
     @RequestMapping("execute")
-    public Result<Void> execute(Integer planId) {
-        planService.execute(planId);
+    public Result<Void> execute(Integer id) {
+        planService.execute(id);
         return Result.success(null);
     }
 
     @RequestMapping("stop")
-    public Result<Void> stop(Integer planId) {
-        planService.stop(planId);
+    public Result<Void> stop(Integer id) {
+        planService.stop(id);
         return Result.success(null);
+    }
+
+    @RequestMapping("get")
+    public Result<Plan> getPlan(Integer id) {
+        return Result.success(planService.getPlanView(id));
     }
 
 }

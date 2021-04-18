@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class DatasourceManager {
 
-    private Map<String, DataSource> map = new HashMap<>();
+    private final Map<String, DataSource> map = new HashMap<>();
 
     public void addDataSource(String database, DataSource dataSource) {
         map.put(database, dataSource);
