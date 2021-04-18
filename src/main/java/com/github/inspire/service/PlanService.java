@@ -76,4 +76,8 @@ public class PlanService {
             recurse(ds);
         }
     }
+
+    public void stop(Integer planId) {
+        facade.stop(planId);
+    }
 }

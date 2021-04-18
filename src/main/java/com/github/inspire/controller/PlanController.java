@@ -29,4 +29,10 @@ public class PlanController {
         return Result.success(null);
     }
 
+    @RequestMapping("stop")
+    public Result<Void> stop(Integer planId) {
+        planService.stop(planId);
+        return Result.success(null);
+    }
+
 }

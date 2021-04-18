@@ -17,4 +17,11 @@ public class Result<T> {
         result.code = 0;
         return result;
     }
+
+    public static Result<Void> fail(String message) {
+        Result<Void> result = new Result<>();
+        result.setMessage(message);
+        result.code = 1;
+        return result;
+    }
 }
