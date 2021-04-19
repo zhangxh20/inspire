@@ -1,9 +1,9 @@
 package com.github.inspire.processor;
 
-import com.github.inspire.dao.ResultMapper;
+import com.github.inspire.dao.HistoryMapper;
 import com.github.inspire.entity.Dataset;
 import com.github.inspire.entity.Plan;
-import com.github.inspire.entity.Result;
+import com.github.inspire.entity.History;
 import com.github.inspire.manager.ExecuteContext;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -23,7 +23,7 @@ public class ProcessorFacade {
     @Resource
     private List<Processor> processors;
     @Resource
-    private ResultMapper resultMapper;
+    private HistoryMapper resultMapper;
 
     private final Map<Integer, Processor> processorMap = new HashMap<>();
 
@@ -43,7 +43,7 @@ public class ProcessorFacade {
     public void execute(Plan plan) {
         StopWatch stopWatch =  new StopWatch();
         stopWatch.start();
-        Result result = record(plan);
+        History result = record(plan);
         ExecuteContext context = new ExecuteContext();
         contextMap.put(plan.getId(), context);
         try {
@@ -70,20 +70,20 @@ public class ProcessorFacade {
     private void executeDatasets(List<Dataset> datasets, ExecuteContext context) throws Exception {
         Map<String, Object> parent = new HashMap<>();
         for (Dataset dataset : datasets) {
-            Processor processor = getProcessor(dataset.getDateType());
+            Processor processor = getProcessor(dataset.getDataType());
             processor.process(context, dataset, parent, true);
         }
     }
 
-    private Result record(Plan plan) {
-        Result result = new Result();
+    private History record(Plan plan) {
+        History result = new History();
         result.setPlanId(plan.getId());
         result.setPlanName(plan.getName());
         resultMapper.insert(result);
         return result;
     }
 
-    private void updateResult(Result result) {
+    private void updateResult(History result) {
         resultMapper.updateById(result);
     }
 

@@ -20,9 +20,9 @@ public class Dataset {
 
     private Integer parentId;
 
-    private Integer dateType;
+    private Integer dataType;
 
-    private String dataSource;
+    private String datasource;
 
     private String content;
 

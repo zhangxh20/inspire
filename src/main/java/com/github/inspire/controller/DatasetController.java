@@ -3,13 +3,10 @@ package com.github.inspire.controller;
 import com.github.inspire.dto.Result;
 import com.github.inspire.entity.Dataset;
 import com.github.inspire.service.DatasetService;
-import lombok.Data;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @RequestMapping("dataset")
 @RestController
@@ -24,7 +21,7 @@ public class DatasetController {
         return Result.success(null);
     }
 
-    @PostMapping("delete")
+    @GetMapping("delete")
     public Result<Void> delete(Integer id) {
         boolean delete = datasetService.delete(id);
         if (delete) {
@@ -32,5 +29,10 @@ public class DatasetController {
         } else {
             return Result.fail("删除失败");
         }
+    }
+
+    @GetMapping("getDatasets")
+    public Result<List<Dataset>> getDatasets(Integer planId) {
+        return Result.success(datasetService.getDatasets(planId));
     }
 }

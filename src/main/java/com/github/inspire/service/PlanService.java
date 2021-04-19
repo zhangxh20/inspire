@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.inspire.dao.DatasetMapper;
 import com.github.inspire.dao.PlanMapper;
 import com.github.inspire.dao.RuleMapper;
-import com.github.inspire.dto.QueryPlanReq;
 import com.github.inspire.entity.Dataset;
 import com.github.inspire.entity.Plan;
 import com.github.inspire.entity.Rule;
@@ -32,9 +31,14 @@ public class PlanService {
     @Resource
     private ProcessorFacade facade;
 
-    public Page<Plan> query(QueryPlanReq req) {
-        return planMapper.selectPage(new Page<>(req.getPage(),req.getSize()), Wrappers.<Plan>lambdaQuery()
-                .eq(StringUtils.hasLength(req.getName()), Plan::getName, req.getName())
+    public void create(Plan plan) {
+        plan.setId(null);
+        planMapper.insert(plan);
+    }
+
+    public Page<Plan> query(String name, Integer page, Integer size) {
+        return planMapper.selectPage(new Page<>(page, size), Wrappers.<Plan>lambdaQuery()
+                .like(StringUtils.hasLength(name), Plan::getName, name)
         );
     }
 
@@ -84,6 +88,9 @@ public class PlanService {
 
     public Plan getPlanView(Integer id) {
         Plan plan = getPlan(id);
+        if (plan == null) {
+            return null;
+        }
         List<Dataset> datasets = plan.getDatasets();
         List<Dataset> viewDatasets = new ArrayList<>();
         plan.setDatasets(viewDatasets);

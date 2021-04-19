@@ -31,7 +31,7 @@ public class DatabaseProcessor implements Processor{
     public void process(ExecuteContext context, Dataset dataset, Map<String, Object> parent, boolean joinAble) throws Exception{
         DatabaseQuery query = new DatabaseQuery();
         query.setSql(dataset.getContent());
-        query.setDatasource(dataset.getDataSource());
+        query.setDatasource(dataset.getDatasource());
         final int count = visitor.count(query, parent);
         if (count == 0) {
             ruleEngine.execute(parent, dataset.getRules(), context);
@@ -64,7 +64,7 @@ public class DatabaseProcessor implements Processor{
                 d.putAll(parent);
                 ruleEngine.execute(d, dataset.getRules(), context);
                 for (Dataset child : dataset.getChildren()) {
-                    Processor processor = facade.getProcessor(child.getDateType());
+                    Processor processor = facade.getProcessor(child.getDataType());
                     try {
                         processor.process(context, child, d, false);
                     } catch (Exception e) {

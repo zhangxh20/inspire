@@ -2,7 +2,6 @@ package com.github.inspire.controller;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.github.inspire.dto.QueryPlanReq;
 import com.github.inspire.dto.Result;
 import com.github.inspire.entity.Plan;
 import com.github.inspire.service.PlanService;
@@ -17,9 +16,15 @@ public class PlanController {
     @Resource
     public PlanService planService;
 
+    @PostMapping("create")
+    public Result<Void> create(@RequestBody Plan plan) {
+        planService.create(plan);
+        return Result.success(null);
+    }
+
     @PostMapping("query")
-    public Result<IPage<Plan>> query(@RequestBody QueryPlanReq req) {
-        return Result.success(planService.query(req));
+    public Result<IPage<Plan>> query(String name, @RequestParam(defaultValue = "1") Integer page, @RequestParam(defaultValue = "20") Integer size) {
+        return Result.success(planService.query(name, page, size));
     }
 
     @RequestMapping("execute")
