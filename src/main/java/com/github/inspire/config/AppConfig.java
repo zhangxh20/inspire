@@ -7,6 +7,7 @@ import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 
 import java.util.List;
 
@@ -45,5 +46,14 @@ public class AppConfig {
         executor.setMaxPoolSize(processors * 4);
         executor.setThreadNamePrefix("inspire");
         return executor;
+    }
+
+    @Bean
+    public ThreadPoolTaskScheduler scheduler() {
+        ThreadPoolTaskScheduler scheduler = new ThreadPoolTaskScheduler();
+        int processors = Runtime.getRuntime().availableProcessors();
+        scheduler.setPoolSize(processors);
+        scheduler.setThreadNamePrefix("scheduler");
+        return scheduler;
     }
 }

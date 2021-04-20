@@ -2,6 +2,7 @@ package com.github.inspire.service;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.github.inspire.common.enums.SchedulerType;
 import com.github.inspire.dao.DatasetMapper;
 import com.github.inspire.dao.PlanMapper;
 import com.github.inspire.dao.RuleMapper;
@@ -47,9 +48,7 @@ public class PlanService {
         if (plan == null || !plan.getEnable()) {
             return;
         }
-        executor.execute(() -> {
-            facade.execute(plan);
-        });
+        executor.execute(() -> facade.execute(plan));
     }
 
     private Plan getPlan(Integer planId) {
@@ -107,6 +106,16 @@ public class PlanService {
             ds.setLevel(dataset.getLevel() + 1);
             list.add(ds);
             setChildLevel(ds, list);
+        }
+    }
+
+    public void execute(SchedulerType schedulerType) {
+        List<Plan> plans = planMapper.selectList(Wrappers.<Plan>lambdaQuery()
+                .eq(Plan::getEnable, true)
+                .eq(Plan::getScheduler, schedulerType.getCode())
+        );
+        for (Plan plan : plans) {
+            execute(plan.getId());
         }
     }
 }
